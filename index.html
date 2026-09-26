@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Billy — Software Developer</title>
+    <meta name="description" content="Billy adalah Software Developer yang berfokus pada Web & Frontend Development. Membangun aplikasi modern, scalable, dan user-focused." />
+    <meta name="author" content="Billy" />
+    <meta name="keywords" content="Billy, Software Developer, Frontend Developer, Web Developer, React, TypeScript, Indonesia" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Billy — Software Developer" />
+    <meta property="og:description" content="Software Developer focused on Web & Frontend Development. Building modern, scalable digital experiences." />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Billy — Software Developer" />
+    <meta name="twitter:description" content="Software Developer focused on Web & Frontend Development." />
+
+    <!-- Prevent FOUC: apply stored theme before React hydrates -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('portfolio-theme');
+          var isDark =
+            stored === 'dark' ||
+            (!stored || stored === 'system') &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (isDark) document.documentElement.classList.add('dark');
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
