@@ -1,74 +1,31 @@
 import { motion } from 'framer-motion';
-import { Moon, Sun } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
-interface ThemeToggleProps {
-  variant?: 'icon' | 'pill';
-}
-
-export function ThemeToggle({ variant = 'icon' }: ThemeToggleProps) {
+export function ThemeToggle() {
   const { resolvedTheme, toggleTheme } = useTheme();
 
-  if (variant === 'pill') {
-    return (
-      <div
-        className="inline-flex items-center gap-1 rounded-full p-1"
-        style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-        role="group"
-        aria-label="Toggle theme"
-      >
-        <button
-          onClick={toggleTheme}
-          className="relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2"
-          style={{
-            color: resolvedTheme === 'light' ? 'var(--accent)' : 'var(--muted)',
-            background: resolvedTheme === 'light' ? 'var(--accent-light)' : 'transparent',
-          }}
-          aria-label="Light mode"
-        >
-          <Sun className="w-3.5 h-3.5" />
-        </button>
-        <button
-          onClick={toggleTheme}
-          className="relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2"
-          style={{
-            color: resolvedTheme === 'dark' ? 'var(--accent)' : 'var(--muted)',
-            background: resolvedTheme === 'dark' ? 'var(--accent-light)' : 'transparent',
-          }}
-          aria-label="Dark mode"
-        >
-          <Moon className="w-3.5 h-3.5" />
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <motion.button
+    <button
       onClick={toggleTheme}
-      className="relative flex items-center justify-center w-9 h-9 rounded-xl transition-colors focus-visible:outline-none"
-      style={{
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        color: 'var(--muted)',
-      }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      className="flex items-center justify-center w-8 h-8 rounded-sm transition-colors focus-visible:outline-none"
+      style={{ color: 'var(--fg-muted)' }}
       aria-label={resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       title={resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--fg)'; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--fg-muted)'; }}
     >
       <motion.div
         key={resolvedTheme}
-        initial={{ opacity: 0, rotate: -30, scale: 0.7 }}
-        animate={{ opacity: 1, rotate: 0, scale: 1 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
+        initial={{ opacity: 0, y: -4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.18 }}
       >
-        {resolvedTheme === 'dark' ? (
-          <Sun className="w-4 h-4" />
-        ) : (
-          <Moon className="w-4 h-4" />
-        )}
+        {resolvedTheme === 'dark'
+          ? <Sun className="w-4 h-4" />
+          : <Moon className="w-4 h-4" />
+        }
       </motion.div>
-    </motion.button>
+    </button>
   );
 }

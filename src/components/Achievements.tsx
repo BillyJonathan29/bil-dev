@@ -1,172 +1,164 @@
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Users } from 'lucide-react';
 import { achievements } from '../data/portfolio';
-import { SectionHeading, AnimatedSection, staggerContainer, staggerItem } from './ui/Animation';
+import { fadeUp, staggerContainer, staggerItem } from './ui/Animation';
+
+// Arrow icon
+function ArrowRight({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M2 7h10M8 3l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 export default function Achievements() {
-  const featured = achievements.filter(a => a.featured);
-  const others = achievements.filter(a => !a.featured);
-
   return (
     <section
       id="achievements"
       className="py-24 sm:py-32"
+      style={{ borderTop: '1px solid var(--border)' }}
       aria-labelledby="achievements-heading"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          label="Achievements"
-          title="Milestones & recognition."
-          description="Competitions and challenges that pushed me beyond my comfort zone."
-        />
+      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+        {/* Section label */}
+        <motion.p
+          className="label-section mb-12"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          04 / Achievements
+        </motion.p>
 
-        {/* Featured achievement */}
-        {featured.map((item, idx) => (
-          <AnimatedSection key={idx} className="mb-10">
-            <motion.div
-              className="relative rounded-3xl overflow-hidden p-8 sm:p-12"
-              style={{
-                background: 'linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(168,85,247,0.06) 100%)',
-                border: '1px solid rgba(99,102,241,0.2)',
-              }}
-              whileHover={{ boxShadow: '0 20px 60px rgba(99,102,241,0.12)' }}
-            >
-              {/* Background decoration */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+        >
+          {achievements.map((item, idx) => (
+            <motion.div key={idx} variants={staggerItem}>
+              <div className="divider" />
+
               <div
-                className="absolute top-0 right-0 text-[200px] font-black leading-none select-none pointer-events-none opacity-[0.03]"
-                aria-hidden="true"
-                style={{ color: 'var(--accent)', lineHeight: 0.85 }}
+                className="py-10 sm:py-12"
               >
-                {item.number}
-              </div>
-
-              {/* Trophy icon */}
-              <motion.div
-                className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
-                style={{ background: 'var(--accent)', boxShadow: '0 4px 20px rgba(99,102,241,0.3)' }}
-                whileHover={{ rotate: [0, -8, 8, 0], scale: 1.05 }}
-                transition={{ duration: 0.4 }}
-              >
-                <Trophy className="w-7 h-7 text-white" />
-              </motion.div>
-
-              <div className="relative">
-                {/* Rank */}
-                <div
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 text-sm font-bold"
-                  style={{
-                    background: 'rgba(255,215,0,0.12)',
-                    color: '#D97706',
-                    border: '1px solid rgba(255,215,0,0.25)',
-                  }}
-                >
-                  🏆 {item.rank}
-                </div>
-
-                <h3
-                  className="text-2xl sm:text-3xl font-bold mb-2 tracking-tight"
-                  style={{ color: 'var(--foreground)', letterSpacing: '-0.02em' }}
-                >
-                  {item.competition}
-                </h3>
-
-                <div className="flex flex-wrap items-center gap-3 mb-5">
-                  <span
-                    className="px-2.5 py-1 rounded-md text-xs font-medium"
+                <div className="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-6 sm:gap-12">
+                  {/* Number — large */}
+                  <div
+                    className="font-bold leading-none"
                     style={{
-                      background: 'var(--accent-light)',
-                      color: 'var(--accent)',
-                      border: '1px solid rgba(99,102,241,0.2)',
+                      fontSize: 'clamp(3rem, 6vw, 5rem)',
+                      color: 'var(--border)',
+                      letterSpacing: '-0.04em',
+                      fontFamily: 'var(--font-sans)',
+                      lineHeight: 1,
                     }}
+                    aria-hidden="true"
                   >
-                    {item.category}
-                  </span>
-                  <span className="text-sm" style={{ color: 'var(--muted)' }}>
-                    {item.year}
-                  </span>
-                  {item.team && (
-                    <span
-                      className="inline-flex items-center gap-1 text-xs"
-                      style={{ color: 'var(--muted)' }}
-                    >
-                      <Users className="w-3.5 h-3.5" />
-                      Team Achievement
-                    </span>
-                  )}
-                </div>
+                    {item.number}
+                  </div>
 
-                <p
-                  className="text-base leading-relaxed max-w-2xl"
-                  style={{ color: 'var(--muted)' }}
-                >
-                  {item.description}
-                </p>
-              </div>
-            </motion.div>
-          </AnimatedSection>
-        ))}
-
-        {/* Other achievements */}
-        {others.length > 0 && (
-          <AnimatedSection delay={0.1}>
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-5"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              {others.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  className="p-6 rounded-2xl"
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--border)',
-                  }}
-                  variants={staggerItem}
-                  whileHover={{ y: -2, borderColor: 'var(--accent)', boxShadow: '0 8px 25px rgba(99,102,241,0.08)' }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'var(--accent-light)' }}
+                  {/* Content */}
+                  <div>
+                    {/* Rank */}
+                    <p
+                      className="text-xs font-semibold uppercase tracking-widest mb-3"
+                      style={{ color: 'var(--brown)' }}
                     >
-                      <Medal className="w-5 h-5" style={{ color: 'var(--accent)' }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
+                      {item.rank}
+                    </p>
+
+                    {/* Competition */}
+                    <h3
+                      className="font-bold leading-tight mb-1 uppercase"
+                      id="achievements-heading"
+                      style={{
+                        fontSize: 'clamp(1rem, 2vw, 1.35rem)',
+                        color: 'var(--fg)',
+                        letterSpacing: '-0.01em',
+                      }}
+                    >
+                      {item.competition}
+                    </h3>
+                    <p
+                      className="text-sm mb-1"
+                      style={{ color: 'var(--fg-muted)' }}
+                    >
+                      {item.organizer}
+                    </p>
+                    <p
+                      className="text-xs mb-5"
+                      style={{ color: 'var(--fg-subtle)' }}
+                    >
+                      {item.year}
+                    </p>
+
+                    {/* Featured project */}
+                    {item.project && (
                       <div
-                        className="text-xs font-semibold mb-1"
-                        style={{ color: 'var(--accent)' }}
+                        className="py-4 px-5 mb-4"
+                        style={{
+                          borderLeft: '2px solid var(--brown)',
+                          background: 'var(--brown-faint)',
+                        }}
                       >
-                        {item.rank}
-                      </div>
-                      <h3
-                        className="font-bold mb-1 text-sm sm:text-base"
-                        style={{ color: 'var(--foreground)' }}
-                      >
-                        {item.competition}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
-                          {item.year}
-                        </span>
-                        {item.team && (
-                          <span className="inline-flex items-center gap-1 text-xs" style={{ color: 'var(--muted-foreground)' }}>
-                            · <Users className="w-3 h-3" /> Team
-                          </span>
+                        <p
+                          className="text-xs font-semibold uppercase tracking-widest mb-1"
+                          style={{ color: 'var(--brown)' }}
+                        >
+                          Project
+                        </p>
+                        <p
+                          className="font-semibold mb-2"
+                          style={{ color: 'var(--fg)', fontSize: '0.95rem' }}
+                        >
+                          {item.project}
+                        </p>
+                        <p
+                          className="text-sm leading-relaxed mb-3"
+                          style={{ color: 'var(--fg-muted)', lineHeight: 1.7 }}
+                        >
+                          {item.projectDescription}
+                        </p>
+                        {item.technologies.length > 0 && (
+                          <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
+                            {item.technologies.join(' · ')}
+                          </p>
                         )}
                       </div>
-                      <p className="text-xs mt-2 leading-relaxed" style={{ color: 'var(--muted)' }}>
-                        {item.description}
+                    )}
+
+                    {!item.project && item.projectDescription && (
+                      <p
+                        className="text-sm leading-relaxed"
+                        style={{ color: 'var(--fg-muted)', lineHeight: 1.7 }}
+                      >
+                        {item.projectDescription}
                       </p>
-                    </div>
+                    )}
+
+                    {/* Links */}
+                    {item.github && (
+                      <div className="mt-4 flex items-center gap-4">
+                        <a
+                          href={item.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="arrow-link"
+                        >
+                          GitHub <ArrowRight />
+                        </a>
+                      </div>
+                    )}
                   </div>
-                </motion.div>
-              ))}
+                </div>
+              </div>
             </motion.div>
-          </AnimatedSection>
-        )}
+          ))}
+          <div className="divider" />
+        </motion.div>
       </div>
     </section>
   );

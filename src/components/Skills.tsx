@@ -1,48 +1,58 @@
-import React from 'react';
-import { Layers, CheckCircle2 } from 'lucide-react';
-import { portfolioData } from '../data/portfolioData';
+import { motion } from 'framer-motion';
+import { skills } from '../data/portfolio';
+import { fadeUp, staggerContainer, staggerItem } from './ui/Animation';
 
-export const Skills: React.FC = () => {
+export default function Skills() {
   return (
-    <section id="skills" className="py-20 border-t border-slate-800/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 text-indigo-400 font-semibold text-sm tracking-wider uppercase mb-2">
-            <Layers className="w-4 h-4" />
-            <span>Keahlian Teknis</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Teknologi & Perangkat yang Digunakan
-          </h2>
-          <p className="mt-3 text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-            Perangkat dan bahasa yang saya gunakan sehari-hari untuk mengembangkan aplikasi web yang solid.
-          </p>
-        </div>
+    <section
+      id="skills"
+      className="py-24 sm:py-32"
+      style={{ borderTop: '1px solid var(--border)' }}
+      aria-labelledby="skills-heading"
+    >
+      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+        {/* Section label */}
+        <motion.p
+          className="label-section mb-12"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          05 / Skills
+        </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {portfolioData.skills.map((group, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 hover:border-slate-700 transition"
-            >
-              <h3 className="text-lg font-semibold text-indigo-300 mb-4 pb-2 border-b border-slate-800">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+        >
+          {skills.map(group => (
+            <motion.div key={group.category} variants={staggerItem}>
+              <p
+                className="text-xs font-semibold uppercase tracking-widest mb-4"
+                id="skills-heading"
+                style={{ color: 'var(--fg-subtle)', letterSpacing: '0.10em' }}
+              >
                 {group.category}
-              </h3>
-              <div className="flex flex-wrap gap-2.5">
-                {group.skills.map((skill, sIdx) => (
-                  <span
-                    key={sIdx}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-xs sm:text-sm font-medium text-slate-200 border border-slate-700/60 transition"
+              </p>
+              <ul className="space-y-2.5">
+                {group.items.map(skill => (
+                  <li
+                    key={skill}
+                    className="text-sm"
+                    style={{ color: 'var(--fg-muted)' }}
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>{skill}</span>
-                  </span>
+                    {skill}
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
-};
+}

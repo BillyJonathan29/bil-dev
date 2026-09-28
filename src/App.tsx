@@ -2,11 +2,10 @@ import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import TechStack from './components/TechStack';
-import Experience from './components/Experience';
 import Projects from './components/Projects';
+import Experience from './components/Experience';
 import Achievements from './components/Achievements';
-import Organization from './components/Organization';
+import Skills from './components/Skills';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -15,18 +14,21 @@ export default function App() {
   return (
     <ThemeProvider>
       <div
-        className="min-h-screen flex flex-col"
-        style={{ background: 'var(--background)', color: 'var(--foreground)' }}
+        style={{
+          minHeight: '100vh',
+          background: 'var(--bg)',
+          color: 'var(--fg)',
+          fontFamily: 'var(--font-sans)',
+        }}
       >
         <Navbar />
         <main>
           <Hero />
           <About />
-          <TechStack />
-          <Experience />
           <Projects />
+          <Experience />
           <Achievements />
-          <Organization />
+          <Skills />
           <Education />
           <Contact />
         </main>
